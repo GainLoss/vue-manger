@@ -2,14 +2,14 @@ vue-manger
 ====
 使用vue+express+mongodb实现的一个管理员信息界面</br>
 ## 简单介绍
-这是一个单页面，具体功能有：
+这是一个单页面，具体功能有：</br>
 信息的展示、添加、删除、更改；</br>
 管理的登陆和管理员对信息的收藏；</br>
 对模块进行统计，通图标显示出哪个模块是查看最多的，哪个模块是收藏最多的；
 ## 用到的技术
-前台：vue+vue-router+vue-resource+bootstrap+bootstrap-table
-后台：express+multer
-数据库：mongodb+studio 3T
+前台：vue+vue-router+vue-resource+bootstrap+bootstrap-table</br>
+后台：express+multer</br>
+数据库：mongodb+studio 3T</br>
 ## 运行
 目前只是开发环境，并没有对代码进行build</br>
 在vue-manger运行npm run dev</br>
