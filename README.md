@@ -1,4 +1,5 @@
-# vue-manger
+vue-manger
+====
 使用vue+express+mongodb实现的一个管理员信息界面</br>
 ## 简单介绍
 这是一个单页面，具体功能有：
