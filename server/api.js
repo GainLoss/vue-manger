@@ -12,52 +12,41 @@ var multer  = require('multer');
 var upload=multer({dest:'upload/'});
 
 const ObjectID = require('mongodb').ObjectID;
+
 //登录
 router.post('/api/user/login',(req,res)=>{
-    let admin=req.body.admin;
-    let pass=req.body.pass;
-    console
-    models.user.find({admin:admin,pass:pass},function(err,data){
-        if(err){
-            res.send(err)
-        }else{
-            res.send(data)
-        }
-    })
-})
-//导航
-router.get('/api/category/showlist',(req,res)=>{
-    models.category.find((err,data)=>{
-        if(err){
-            res.send(err)
-        }else{
-            res.send(data)
-        }
-    })
-})
-/*电影name:String,author:String,upauthor:String,time:Date,file:String,watch:Number,collect:Number des*/
-router.post('/api/movies/add',(req,res)=>{
-    let data=new models.movies({
-        name:req.body.name,
-        author:req.body.author,
-        upauthor:req.body.upauthor,
-        time:new Date(),
-        des:req.body.des,
-        file:req.body.file,
-    })
-    data.save((err,data)=>{
-        if(err){
-            res.send(err)
-        }else{
-            res.send(data)
-        }
+     let admin=req.body.admin;
+     let pass=req.body.pass;
+    models.user.find({name:admin,pass:pass},(err,data)=>{
+       if(err){
+           res.send(err)
+       }else{
+           res.send(data)
+           
+       }
     })
 })
 //获取每个数据的详情
 router.post('/api/data/detail',(req,res)=>{
     let id=req.body.id;
     let cate=req.body.cate;
+    
+    //获取电影的详情
     models[cate].find({"_id":ObjectID(id)},function(err,data){
+        if(err){
+            res.send(err)
+        }else{
+            res.send(data)
+        }
+    })
+})
+//查看次数
+router.post('/api/data/detail/watch',(req,res)=>{
+    let id=req.body.id;
+    let cate=req.body.cate;
+    let num=req.body.number;
+    //添加查看的次数
+    models[cate].find({"_id":ObjectID(id)}).update({number:num},function(err,data){
         if(err){
             res.send(err)
         }else{
@@ -78,6 +67,37 @@ router.post('/api/data/collect',(req,res)=>{
         }
     })
    
+})
+//==================================
+//导航
+router.get('/api/category/showlist',(req,res)=>{
+    models.category.find((err,data)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send(data)
+        }
+    })
+})
+//=================================
+/*电影name:String,author:String,upauthor:String,time:Date,file:String,watch:Number,collect:Number des*/
+router.post('/api/movies/add',(req,res)=>{
+    let data=new models.movies({
+        name:req.body.name,
+        author:req.body.author,
+        upauthor:req.body.upauthor,
+        time:new Date(),
+        des:req.body.des,
+        file:req.body.file,
+        number:num
+    })
+    data.save((err,data)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send(data)
+        }
+    })
 })
 //文件上传
 router.post('/api/movies/files/upload', upload.single('fabricImage'), function (req, res, next) {
@@ -123,8 +143,7 @@ router.get('/api/movies/query',(req,res)=>{
                 }
             })
         }
-    })
-    
+    }) 
 })
 
 //==========================================

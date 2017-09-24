@@ -28,6 +28,7 @@
                 <div class="file" v-html="html">
                 </div>
             </div>
+            <button type="button" class="btn btn-default" v-on:click="back()" :data-num="item.number">返回</button>
         </form>
 </div>  
 </template>
@@ -53,7 +54,6 @@ export default {
                 id:this.$route.query.id, 
                 cate:this.$route.query.cate
             };
-            console.log(this.$route.query)
             this.$http.post("/api/data/detail",params).then((response)=>{
                 if(response&&response.status==200){
                     var result=response.body;
@@ -63,7 +63,6 @@ export default {
                     if(str.indexOf('png')!=-1||str.indexOf('jpg')!=-1||str.indexOf('gif')!=-1){//图片
                         var html='<img src='+str+'>'
                         this.html=html
-                        console.log(html)
                     }else if(str.indexOf('mp4')!=-1){//视频mp4
                        var html='<video src='+str+' controls="controls" autoplay="autoplay" style="width:400px;height:400px;"></video>'
                         this.html=html
@@ -88,8 +87,21 @@ export default {
             this.$http.post('/api/data/collect',params).then((response)=>{
                 console.log(response)
             })
-        }
+        },
+        //返回列表页面
+        back:function(){
+            var num=$("button").attr('data-num');
 
+            var params={
+                id:this.$route.query.id, 
+                cate:this.$route.query.cate,
+                number:num++
+            }
+
+            this.$http.post('/api/data/detail/watch',params).then((response)=>{
+                console.log(response)
+            })
+        }
     }
 }
 </script>

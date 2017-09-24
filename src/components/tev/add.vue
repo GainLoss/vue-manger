@@ -3,7 +3,7 @@
     <div>
         <form style="width:700px;height:700px;margin:20px auto">
             <div class="form-group">
-                <label for="exampleInputName">电影的名字</label>
+                <label for="exampleInputName">电视剧的名字</label>
                 <input type="text" class="form-control" name="name" placeholder="名字">
             </div>
             <div class="form-group">

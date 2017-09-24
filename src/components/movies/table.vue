@@ -43,7 +43,7 @@
                         title: '电影名字',
                         sortable : true,
                         formatter:function(value,row){
-                            var html="<div v-on:click='clickframe' data-id="+row._id+">"+value+"</div>"
+                            var html="<div v-on:click='clickframe' data-id="+row._id+" style='cursor:pointer;'>"+value+"</div>"
                             return html
                         }
                     }, {
