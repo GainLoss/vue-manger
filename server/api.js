@@ -44,9 +44,10 @@ router.post('/api/data/detail',(req,res)=>{
 router.post('/api/data/detail/watch',(req,res)=>{
     let id=req.body.id;
     let cate=req.body.cate;
-    let num=req.body.number;
+    let watch=req.body.watch;
+    console.log(watch)
     //添加查看的次数
-    models[cate].find({"_id":ObjectID(id)}).update({number:num},function(err,data){
+    models[cate].find({"_id":ObjectID(id)}).update({watch:watch},function(err,data){
         if(err){
             res.send(err)
         }else{
@@ -81,6 +82,7 @@ router.get('/api/category/showlist',(req,res)=>{
 })
 //=================================
 /*电影name:String,author:String,upauthor:String,time:Date,file:String,watch:Number,collect:Number des*/
+//添加
 router.post('/api/movies/add',(req,res)=>{
     let data=new models.movies({
         name:req.body.name,
@@ -89,7 +91,9 @@ router.post('/api/movies/add',(req,res)=>{
         time:new Date(),
         des:req.body.des,
         file:req.body.file,
-        number:num
+        number:req.body.number,
+        collect:req.body.collect,
+        watch:req.body.watch
     })
     data.save((err,data)=>{
         if(err){
@@ -101,7 +105,6 @@ router.post('/api/movies/add',(req,res)=>{
 })
 //文件上传
 router.post('/api/movies/files/upload', upload.single('fabricImage'), function (req, res, next) {
-
     var file = req.file;
     //以下代码得到文件后缀
     name = file.originalname;
@@ -122,30 +125,68 @@ router.post('/api/movies/files/upload', upload.single('fabricImage'), function (
     res.send(path);
 })
 //获取电影数据
-router.get('/api/movies/query',(req,res)=>{
-    var offset=parseInt(req.query.offset);
-    var limit=parseInt(req.query.limit);
-    models.movies.find().skip(offset).limit(limit).find((err,data)=>{
-        if(err){
-            res.send(err)
-        }else{
-            models.movies.count((err,result)=>{
-                if(err){
-                    res.send(err)
-                }else{
-                    res.send({
-                        body:{
-                            rows:data,
-                            size:limit,
-                            total:result
-                        }
-                    })
-                }
-            })
-        }
-    }) 
+router.post('/api/movies/query',(req,res)=>{
+    let offset=parseInt(req.body.offset);
+    let limit=parseInt(req.body.limit);
+    let name=req.body.name;
+    if(name==''||name=="all"){
+        models.movies.find().skip(offset).limit(limit).find((err,data)=>{
+            if(err){
+                res.send(err)
+            }else{
+                models.movies.count((err,result)=>{
+                    if(err){
+                        res.send(err)
+                    }else{
+                        res.send({
+                            body:{
+                                rows:data,
+                                size:limit,
+                                total:result
+                            }
+                        })
+                    }
+                })
+            }
+        }) 
+    }else{
+        models.movies.find({name:name}).skip(offset).limit(limit).find((err,data)=>{
+            if(err){
+                res.send(err)
+            }else{
+                models.movies.count((err,result)=>{
+                    if(err){
+                        res.send(err)
+                    }else{
+                        res.send({
+                            body:{
+                                rows:data,
+                                size:limit,
+                                total:result
+                            }
+                        })
+                    }
+                })
+            }
+        }) 
+    }
+    
 })
-
+//删除信息
+router.post('/api/movies/delete',(req,res)=>{
+    var idArr=req.body.idArr;
+    console.log(idArr)
+    for(var i=0;i<idArr.length;i++){
+        models.movies.remove({"_id":ObjectID(idArr[i])},function(err,data){
+            if(err){
+                res.send(err)
+            }else{
+                res.send(data)
+            }
+        }) 
+    }
+   
+})
 //==========================================
 /*电视剧name:String,author:String,upauthor:String,time:Date,file:String,watch:Number,collect:Number des*/
 router.post('/api/tev/add',(req,res)=>{

@@ -28,7 +28,7 @@
                     <button v-on:click="uploadImage()">提交文件</button>
                 </label>  -->
             </div>
-            <button type="button" class="btn btn-default" v-on:click="submit()" data-num="0">提交</button>
+            <button type="button" class="btn btn-default" v-on:click="submit()">提交</button>
         </form>
         <div class="screen" style="display:none;">
             <div style="background:rgba(0,0,0,.5);width:100%;height:100%;position:absolute;left:0px;top:0px;z-index:2"></div>
@@ -41,7 +41,8 @@
 export default {
     data(){
         return{
-            fileName:''
+            fileName:'',
+            dataNum:0,
         }
     },
     methods:{
@@ -66,14 +67,17 @@ export default {
             var author=$("input[name=author]").val();
             var upauthor=$("input[name=upauthor]").val();
             var des=$("textarea[name=des]").val();
-            var number=$('button').attr('data-num');
+            
+            var number=this.dataNum;
             var data={
                 name:name,
                 author:author,
                 upauthor:upauthor,
                 des:des,
                 file:this.fileName,
-                number:number
+                number:number,
+                watch:0,
+                collect:0
             }
             this.$http.post('/api/movies/add',data).then((response)=>{
                 if(response&&response.status==200){

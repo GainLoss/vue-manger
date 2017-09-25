@@ -14,6 +14,11 @@
      },
      methods:{
          table:function(){
+            function queryParams(params) {
+                return {
+                    
+                }
+            }
             var _this=this;
                 $('#table').bootstrapTable({
                     sortName : "",
@@ -29,18 +34,13 @@
                     dataType:'json',
                     url: '/api/comic/query?',
                     maintainSelected:true,
-                    queryParams : function(params) {
-                        return params;
-                    },
+                    queryParams :queryParams,
                     responseHandler:function(res){
                     return res.body;
                     },
                     columns: [{
                         field: 'checkStatus',
                         checkbox: true, 
-                    },{
-                        field: 'id',
-                        visible:'false'
                     }, {
                         field: 'name',
                         title: '动漫名字',

@@ -42,9 +42,6 @@
                     columns: [{
                         field: 'checkStatus',
                         checkbox: true, 
-                    },{
-                        field: 'id',
-                        visible:'false'
                     }, {
                         field: 'name',
                         title: '新闻名字',

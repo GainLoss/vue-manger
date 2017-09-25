@@ -48,6 +48,11 @@ export default new Router({
       component:Addcomic
     },
     {
+      path:'/news/add',
+      name:'Addnews',
+      component:Addnews
+    },
+    {
       path:'/hello/detail/view',
       name:'Detail',
       component:Detail
