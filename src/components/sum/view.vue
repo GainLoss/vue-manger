@@ -9,64 +9,107 @@ import Highcharts from 'highcharts/highstock';
 import HighchartsMore from 'highcharts/highcharts-more';
 import HighchartsDrilldown from 'highcharts/modules/drilldown';
 import Highcharts3D from 'highcharts/highcharts-3d';
+import highexports from 'highcharts/js/modules/exporting.js';
 HighchartsMore(Highcharts)
 HighchartsDrilldown(Highcharts);
 Highcharts3D(Highcharts);
+highexports(Highcharts);
+
 
 export default {
     data() {
         return {
-
+            data:[],
         }
     },
-    mounted:function(){
-        this.charts();
+    mounted: function() {
+        this.getData();
     },
     methods: {
-        charts: function() {
+        //获取每个功能数据
+        getData: function() {
+            var _this = this;
+            var arr = [['movies'], ['tev'], ['comic'], ['life'], ['news']];
+            var a=[];
+            Arr(a).then(function(value){
+                for(var i=0;i<arr.length;i++){
+                    arr[i].push(value[i].num)
+                }
+                _this.charts(arr);
+            })
+            function Arr(a){
+                return new Promise(function(reslove,reject){
+                    var b=[];
+                    for (var i = 0; i < arr.length; i++) {
+                        var params = {
+                            model: arr[i][0]
+                        }
+                        _this.$http.post('/api/model/query', params).then((response) => {
+                            if (response && response.status == 200) {
+                                a.push({num:response.body.body.total})
+                                b.push({num:response.body.body.total})
+                            }
+                            return a;
+                        })
+                    }
+                    setTimeout(function(){
+                         if(a!==[]){
+                            reslove(a)
+                        }
+                    },1000)
+                   
+                })
+            }     
+        },
+        //渲染图标
+        charts: function(data) {
             var chart = new Highcharts.Chart('container', {
+                chart: {
+                    type: 'column'
+                },
                 title: {
-                    text: '不同城市的月平均气温',
-                    x: -20
+                    text: '每个功能里面的数量'
                 },
                 subtitle: {
-                    text: '数据来源: WorldClimate.com',
-                    x: -20
+                    text: '实时显示每个功能对应的数据(可能会有2秒的延迟)'
                 },
                 xAxis: {
-                    categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+                    type: 'category',
+                    labels: {
+                        rotation: -45,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
                 },
                 yAxis: {
+                    min: 0,
                     title: {
-                        text: '温度 (°C)'
-                    },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-                },
-                tooltip: {
-                    valueSuffix: '°C'
+                        text: '数量（个）'
+                    }
                 },
                 legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle',
-                    borderWidth: 0
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: '功能数据总量: <b>{point.y:.1f} 个</b>'
                 },
                 series: [{
-                    name: '东京',
-                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-                }, {
-                    name: '纽约',
-                    data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-                }, {
-                    name: '柏林',
-                    data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-                }, {
-                    name: '伦敦',
-                    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                    name: '总数据',
+                    data: data,
+                    dataLabels: {
+                        enabled: true,
+                        rotation: -90,
+                        color: '#FFFFFF',
+                        align: 'right',
+                        format: '{point.y:.1f}', // one decimal
+                        y: 10, // 10 pixels down from the top
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
                 }]
             });
 

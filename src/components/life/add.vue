@@ -41,7 +41,8 @@
 export default {
     data(){
         return{
-            fileName:''
+            fileName:'',
+            dataNum:0,
         }
     },
     methods:{
@@ -65,18 +66,21 @@ export default {
             var name=$("input[name=name]").val();
             var author=$("input[name=author]").val();
             var upauthor=$("input[name=upauthor]").val();
-            var des=$("input[name=des]").val();
+            var des=$("textarea[name=des]").val();
+            
+            var number=this.dataNum;
             var data={
                 name:name,
                 author:author,
                 upauthor:upauthor,
                 des:des,
-                file:this.fileName
+                file:this.fileName,
+                watch:0,
+                collect:0
             }
-            
             this.$http.post('/api/life/add',data).then((response)=>{
                 if(response&&response.status==200){
-                    $(".tip").html("您的添加信息已经提交成功，过2秒后页面自动跳转到电影首页，您可以在那儿查看添加的数据")
+                    $(".tip").html("您的添加信息已经提交成功，您可以在那儿查看添加的数据")
                     $(".screen").show();
                     setTimeout(function(){
                         $(".screen").hide();
@@ -92,7 +96,7 @@ export default {
 <style>
 .tip{
     width:400px;
-    height:300px;
+    height:200px;
     text-align:center;
     word-wrap: break-word;
     padding:106px 10px;
@@ -106,3 +110,4 @@ export default {
     border-radius:10px;color:#fff;
 }
 </style>
+

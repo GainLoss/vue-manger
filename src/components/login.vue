@@ -1,6 +1,7 @@
 <template>
         <div class="row" style="width:500px;margin:100px auto">
-            <form >
+            <form style="width:auto;background:#33CCCC;padding:20px;border-radius:10px;color:#fff">
+                <h1>用户登录</h1>
                 <p class="tip" style="color:red"></p>
                 <div class="form-group">
                     <label for="exampleInputEmail1">用户 (user1,user2,user3,user4)</label>
@@ -35,7 +36,6 @@ export default {
             }
             this.$http.post('/api/user/login',params).then((response)=>{
                 if(response&&response.status==200){
-                    console.log(response.body.length)
                     if(response.body.length==1){
                         _this.$router.push('/hello/movies')
                     }else{

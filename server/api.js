@@ -69,6 +69,70 @@ router.post('/api/data/collect',(req,res)=>{
     })
    
 })
+//获取每个模块的列表信息
+router.post('/api/model/query',(req,res)=>{
+    let offset=parseInt(req.body.offset);
+    let limit=parseInt(req.body.limit);
+    let name=req.body.name;
+    let model=req.body.model;
+    if(name==''||name=="all"){
+        models[model].find().skip(offset).limit(limit).find((err,data)=>{
+            if(err){
+                res.send(err)
+            }else{
+                models[model].count((err,result)=>{
+                    if(err){
+                        res.send(err)
+                    }else{
+                        res.send({
+                            body:{
+                                rows:data,
+                                size:limit,
+                                total:result
+                            }
+                        })
+                    }
+                })
+            }
+        }) 
+    }else{
+        models[model].find({name:name}).skip(offset).limit(limit).find((err,data)=>{
+            if(err){
+                res.send(err)
+            }else{
+                models[model].count((err,result)=>{
+                    if(err){
+                        res.send(err)
+                    }else{
+                        res.send({
+                            body:{
+                                rows:data,
+                                size:limit,
+                                total:result
+                            }
+                        })
+                    }
+                })
+            }
+        }) 
+    }
+    
+})
+//删除每个模块中的某个数据
+router.post('/api/model/delete',(req,res)=>{
+    let idArr=req.body.idArr;
+    let model=req.body.model;
+    for(var i=0;i<idArr.length;i++){
+        models[model].remove({"_id":ObjectID(idArr[i])},function(err,data){
+            if(err){
+                res.send(err)
+            }else{
+                res.send(data)
+            }
+        }) 
+    }
+   
+})
 //==================================
 //导航
 router.get('/api/category/showlist',(req,res)=>{

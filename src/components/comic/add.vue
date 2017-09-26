@@ -1,7 +1,7 @@
 <template>
     <!-- 电影：名字 作者 上传人 上传时间 文件（图片或者视频） 观看人数 收藏人数 描述 -->
     <div>
-        <form style="width:700px;height:700px;margin:20px auto">
+        <form style="width:700px;height:700px;margin:20px auto" >
             <div class="form-group">
                 <label for="exampleInputName">标题（名字）</label>
                 <input type="text" class="form-control" name="name" placeholder="名字">
@@ -41,7 +41,8 @@
 export default {
     data(){
         return{
-            fileName:''
+            fileName:'',
+            dataNum:0,
         }
     },
     methods:{
@@ -65,15 +66,19 @@ export default {
             var name=$("input[name=name]").val();
             var author=$("input[name=author]").val();
             var upauthor=$("input[name=upauthor]").val();
-            var des=$("input[name=des]").val();
+            var des=$("textarea[name=des]").val();
+            
+            var number=this.dataNum;
             var data={
                 name:name,
                 author:author,
                 upauthor:upauthor,
                 des:des,
-                file:this.fileName
+                file:this.fileName,
+                number:number,
+                watch:0,
+                collect:0
             }
-            
             this.$http.post('/api/comic/add',data).then((response)=>{
                 if(response&&response.status==200){
                     $(".tip").html("您的添加信息已经提交成功，过2秒后页面自动跳转到电影首页，您可以在那儿查看添加的数据")
