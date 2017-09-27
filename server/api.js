@@ -75,8 +75,11 @@ router.post('/api/model/query',(req,res)=>{
     let limit=parseInt(req.body.limit);
     let name=req.body.name;
     let model=req.body.model;
+    let sort=req.body.sort;
+    let obj={};
+    obj[sort]=-1;
     if(name==''||name=="all"){
-        models[model].find().skip(offset).limit(limit).find((err,data)=>{
+        models[model].find().sort(obj).skip(offset).limit(limit).find((err,data)=>{
             if(err){
                 res.send(err)
             }else{
@@ -198,6 +201,7 @@ router.post('/api/movies/query',(req,res)=>{
             if(err){
                 res.send(err)
             }else{
+                console.log(data)
                 models.movies.count((err,result)=>{
                     if(err){
                         res.send(err)
