@@ -69,6 +69,19 @@ router.post('/api/data/collect',(req,res)=>{
     })
    
 })
+//获取详情
+router.post('/api/model/detail',(req,res)=>{
+    let id=req.body.id;
+    let cate=req.body.cate;
+    models[cate].find({"_id":ObjectID(id)},function(err,data){
+        if(err){
+            res.send(err)
+        }else{
+            res.send(data)
+        }
+    }) 
+   
+})
 //获取每个模块的列表信息
 router.post('/api/model/query',(req,res)=>{
     let offset=parseInt(req.body.offset);

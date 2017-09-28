@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="col-sm-10">
-        <div v-for="(item,index) in this.data" :key="index" style="width:160px;float:left;margin:0px 11px 0px 0px">
+        <div v-for="(item,index) in this.data" :key="index" v-on:click="clickList(message,item._id)" style="width:160px;float:left;margin:0px 11px 0px 0px">
             <div><img :src="item.file" style="width:100%;height:130px;"></div>
             <div style="heihgt:30px;line-heihgt:30px;"><p>{{item.name}}</p></div>
             <div style="height:30px;text-align:left">
@@ -64,6 +64,10 @@ export default {
         clickTab:function(mark){
             this.data=[];
             this.getData(mark)
+        },
+        clickList:function(cate,id){
+            console.log(cate)
+            this.$router.push({path:'/home/detail',query:{cate:cate,id:id}})
         }
     }
 

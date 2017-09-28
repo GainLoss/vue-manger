@@ -19,6 +19,7 @@ import tev from '@/components/qiantai/tev/view'
 import comic from '@/components/qiantai/comic/view'
 import life from '@/components/qiantai/life/view'
 import news from '@/components/qiantai/news/view'
+import qtdetail from '@/components/qiantai/detail'
 
 
 
@@ -32,6 +33,12 @@ export default new Router({
       name: 'home',
       component: home
     },
+    {
+      path: '/home/detail',
+      name: 'qtdetail',
+      component: qtdetail
+    },
+    
     {
       path:'/home/movies',
       name:'movies',

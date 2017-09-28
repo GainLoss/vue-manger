@@ -2,14 +2,18 @@
 <div class="row">
     <div class="col-sm-1" >
         <router-link to="/houtai/login">
-        <img src="static/image/logo.png" style="width:20px;height:20px;">
+        <img src="static/image/logo.png" title="登录管理员" style="width:40px;height:40px;">
         </router-link>
     </div>
     <div class="col-sm-2" v-on:click="activeMenu(item.mark)" style="cursor:pointer;" v-for="(item,index) in dataMenu" :key="index" v-bind:dataMenu="item.mark">
         <p style="height:20px;"><img :src="item.src" style="height:100%"/></p>
         <p>{{item.menu}}</p>
     </div>
-    <div class="col-sm-1"><img src="static/image/logo.png" style="width:20px;height:20px;"></div>
+    <div class="col-sm-1" >
+        <router-link to="/houtai/login">
+        <img src="static/image/logo.png" title="登录管理员" style="width:40px;height:40px;">
+        </router-link>
+    </div>
 </div>  
 </template>
 

@@ -41,6 +41,7 @@ export default {
             }
             
             this.$http.post('/api/user/login',params).then((response)=>{
+                console.log(response)
                 if(response&&response.status==200){
                     if(response.body.length==1){
                        localStorage.setItem('name',response.body[0].name);

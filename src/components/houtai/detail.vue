@@ -72,7 +72,7 @@ export default {
                 }
             }).then(function() {
                 //增加查看次数
-                var num=++this.watchNum;
+                var num = ++this.watchNum;
                 var params = {
                     id: this.$route.query.id,
                     cate: this.$route.query.cate,
@@ -85,6 +85,7 @@ export default {
                 })
             })
         },
+        
         //点击收藏
         clickCollect: function() {
             if (this.collectMark == -1) {

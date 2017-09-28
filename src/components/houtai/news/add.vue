@@ -18,16 +18,15 @@
                 <label for="exampleInputauthor">描述</label>
                 <textarea type="text" class="form-control" name="des" placeholder="描述"></textarea>
             </div>
+
             <div>
                 <label class="custom-file-upload">
                 <input type="file" 
                         accept="image/png,image/jpg,image/jpeg,image/gif" 
                         name="myupload" id="uploadInput" v-on:change="uploadImage()"/>
                 </label>
-                <!-- <label class="custom-file-submit" name="">
-                    <button v-on:click="uploadImage()">提交文件</button>
-                </label>  -->
             </div>
+
             <button type="button" class="btn btn-default" v-on:click="submit()">提交</button>
         </form>
         <div class="screen" style="display:none;">
@@ -45,6 +44,7 @@ export default {
         }
     },
     methods:{
+
         uploadImage(){
             var formData = new FormData();
             var myfile = document.getElementById('uploadInput').files[0];
@@ -60,6 +60,7 @@ export default {
                 console.log(err)
             });
         },
+        
         submit:function(){
             var _this=this;
             var name=$("input[name=name]").val();
