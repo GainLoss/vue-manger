@@ -7,9 +7,9 @@ vue-manger
 信息的展示、添加、删除、更改；</br>
 管理的登陆和管理员对信息的收藏；</br>
 对模块进行统计，通图标显示出哪个模块是查看最多的，哪个模块是收藏最多的；
-## 用到的技术
+## 技术
 前台：vue+vue-router+vue-resource+bootstrap+bootstrap-table</br>
-后台：express+multer</br>
+后台：express+multer(上传文件)</br>
 数据库：mongodb+studio 3T</br>
 ## 运行
 目前只是开发环境，并没有对代码进行build</br>
